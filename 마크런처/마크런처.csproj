@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>Homepage_Gameplay-Trailer_MC-OV-logo_300x300.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Homepage_Gameplay-Trailer_MC-OV-logo_300x300.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CmlLib.Core" Version="4.0.4" />
+    <PackageReference Include="CmlLib.Core.Auth.Microsoft" Version="3.2.2" />
+    <PackageReference Include="CmlLib.Core.Commons" Version="4.0.0" />
+    <PackageReference Include="MojangAPI" Version="1.2.1" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.1" />
+  </ItemGroup>
+
+</Project>
