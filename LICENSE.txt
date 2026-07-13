@@ -1,6 +1,6 @@
-# Licenses
+Licenses
 
-## This Project
+This Project
 
 MIT License
 
@@ -26,9 +26,9 @@ SOFTWARE.
 
 ---
 
-## Third-Party Components
+Third-Party Components
 
-### AlphaBs
+AlphaBs
 
 MIT License
 
@@ -54,7 +54,7 @@ SOFTWARE.
 
 ---
 
-### CmlLib
+CmlLib
 
 MIT License
 
