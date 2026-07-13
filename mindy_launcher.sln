@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "마크런처", "마크런처\마크런처.csproj", "{87066E24-DA82-4BD4-909E-CC7E6463DEF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "mindy_launcher", "mindy_launcher\mindy_launcher.csproj", "{87066E24-DA82-4BD4-909E-CC7E6463DEF6}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "마크런처setup", "마크런처setup\마크런처setup.vdproj", "{8AC97D04-182A-4102-A1AD-085E3B1F8CC8}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "mindy_launcher-setup", "mindy_launcher-setup\mindy_launcher-setup.vdproj", "{8AC97D04-182A-4102-A1AD-085E3B1F8CC8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
