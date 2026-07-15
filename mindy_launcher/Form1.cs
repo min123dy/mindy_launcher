@@ -398,6 +398,14 @@ namespace 마크런처
             {
                 from2.Close();
             }
+             if (LICENSE_LoadInstance == null)
+            {
+
+            }
+            else
+            {
+                LICENSE_LoadInstance.Close();
+            }
 
 
             if (_session == null)
@@ -621,6 +629,7 @@ namespace 마크런처
             button14.Enabled = false;
             button15.Enabled = false;
             comboBox2.Enabled = false;
+            LICENSEbtn.Enabled = false;
 
         }
         public void uion()
@@ -658,6 +667,7 @@ namespace 마크런처
             button14.Enabled = true;
             button15.Enabled = true;
             comboBox2.Enabled = true;
+            LICENSEbtn.Enabled = true;
         }
         private void Launcher_FileChanged(InstallerProgressChangedEventArgs e) //파일 체인지 변경
         {
@@ -1058,7 +1068,7 @@ namespace 마크런처
                 // 기존 파일이 있을 경우 덮어쓰기
 
                 string fileContent = File.ReadAllText(updateFilePathExe1);
-                int threshold = 25;
+                int threshold = 26;
 
                 // 숫자가 기준보다 크면 명령 실행
                 if (int.Parse(fileContent) > threshold)
