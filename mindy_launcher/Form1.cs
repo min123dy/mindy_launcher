@@ -81,6 +81,7 @@ namespace 마크런처
     using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
     using System.Drawing;
     using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+    using mindy_launcher;
 
     //CmlLib의 winfrom 런처 코드 참고함 
 
@@ -93,6 +94,7 @@ namespace 마크런처
         private System.Windows.Forms.Timer eventTimer; //이벤트 타이머
 
         private Form3 form3Instance;
+        private LICENSE_Load LICENSE_LoadInstance;
         private Form2 from2;
         public Form1()
         {
@@ -242,31 +244,31 @@ namespace 마크런처
                 if (string.IsNullOrEmpty(textBox6.Text) &&
     string.IsNullOrEmpty(textBox7.Text) &&
     string.IsNullOrEmpty(textBox8.Text)
-    
+
    )
-{
-   
-}
-else
-{
-      //로그인
-                var loginHandler = JELoginHandlerBuilder.BuildDefault();
-                var session = await loginHandler.Authenticate();
-                _session = session; //변수에 세션 저장하고 텍스트 박스에 계정정보 보여주기
-                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string DataFolder = Path.Combine(appDataPath, "마크런처", "skin.png");
-                string DataFolder1 = Path.Combine(appDataPath, "마크런처", "cape.png");
+                {
 
-                getskin1(DataFolder, DataFolder1);
+                }
+                else
+                {
+                    //로그인
+                    var loginHandler = JELoginHandlerBuilder.BuildDefault();
+                    var session = await loginHandler.Authenticate();
+                    _session = session; //변수에 세션 저장하고 텍스트 박스에 계정정보 보여주기
+                    string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    string DataFolder = Path.Combine(appDataPath, "마크런처", "skin.png");
+                    string DataFolder1 = Path.Combine(appDataPath, "마크런처", "cape.png");
+
+                    getskin1(DataFolder, DataFolder1);
 
 
-                textBox6.Text = _session.Username;
-                textBox7.Text = _session.UUID;
-                textBox8.Text = _session.Xuid;
-               
-                        checkBox1.Enabled = true;
-}
-              
+                    textBox6.Text = _session.Username;
+                    textBox7.Text = _session.UUID;
+                    textBox8.Text = _session.Xuid;
+
+                    checkBox1.Enabled = true;
+                }
+
 
 
             }
@@ -292,7 +294,7 @@ else
                 }
                 catch (Exception ex)
                 {
-                    
+
                     textBox6.Text = null;
                     textBox7.Text = null;
                     textBox8.Text = null;
@@ -301,17 +303,17 @@ else
                     _session.Xuid = " ";
                     pictureBox1.Image = null;
 
-                     if (ex.Message.Contains("NOT_FOUND"))
-    {
-        checkBox1.Checked = true;
+                    if (ex.Message.Contains("NOT_FOUND"))
+                    {
+                        checkBox1.Checked = true;
                         checkBox1.Enabled = false;
-       
-    }
-    else
-    {
-        // 다른 오류는 메시지만 출력
-        MessageBox.Show(this, $"오류 발생:{ex}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
+
+                    }
+                    else
+                    {
+                        // 다른 오류는 메시지만 출력
+                        MessageBox.Show(this, $"오류 발생:{ex}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                 }
                 LoadConfig();
@@ -324,6 +326,7 @@ else
             if (string.IsNullOrWhiteSpace(textBox2.Text))
             {
                 MessageBox.Show(this, $"오류 발생: 숫자를 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             else
             {
@@ -333,14 +336,16 @@ else
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(this, $"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, $"메모리 입력 오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     return;
                 }
 
             }
             //가로 입력확인
             if (string.IsNullOrWhiteSpace(textBox3.Text))
             {
-                MessageBox.Show(this, $"오류 발생: 숫자를 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, $"가로 창 크기 입력 오류 발생: 숫자를 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             else
             {
@@ -351,13 +356,15 @@ else
                 catch (Exception ex)
                 {
                     MessageBox.Show(this, $"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     return;
                 }
 
             }
             //세로 입력확인
             if (string.IsNullOrWhiteSpace(textBox4.Text))
             {
-                MessageBox.Show(this, $"오류 발생: 숫자를 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, $"세로 창 크기 입력 오류 발생: 숫자를 입력하세요.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             else
             {
@@ -368,6 +375,7 @@ else
                 catch (Exception ex)
                 {
                     MessageBox.Show(this, $"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     return;
                 }
 
             }
@@ -394,93 +402,93 @@ else
 
             if (_session == null)
             {
-              if (checkBox1.Enabled == false) // 비교
+                if (checkBox1.Enabled == false) // 비교
 
                 {
-                    _session.Username = "Demo";
-                     //ui비활성화
-                uioff();
-                label9.Text = "잠시만 기다리세요...";
+                    _session = MSession.GetOfflineSession("Demo");
+                    //ui비활성화
+                    uioff();
+                    label9.Text = "잠시만 기다리세요...";
 
-                try
-                {
-                    // 선택된 설치 경로로 MinecraftPath 설정
-                    var minecraftPath = new MinecraftPath(installPath);
-
-                    var launcher = new MinecraftLauncher(minecraftPath);
-                    MLaunchOption launchOption;
-                    if (checkBox4.Checked)
+                    try
                     {
-                        string updatedPath = textBox5.Text.Replace("javaw.exe", "java.exe");
-                        launchOption = new MLaunchOption
+                        // 선택된 설치 경로로 MinecraftPath 설정
+                        var minecraftPath = new MinecraftPath(installPath);
+
+                        var launcher = new MinecraftLauncher(minecraftPath);
+                        MLaunchOption launchOption;
+                        if (checkBox4.Checked)
                         {
-                            Session = _session,
-                            MaximumRamMb = number,
-                            MinimumRamMb = 512,
-                            ScreenWidth = wite,
-                            ScreenHeight = high,
-                            GameLauncherName = "mindy",
-                            GameLauncherVersion = "1.0",
-                            IsDemo = checkBox1.Checked,
-                            FullScreen = checkBox2.Checked,
-                            JavaPath = updatedPath,
-                            
+                            string updatedPath = textBox5.Text.Replace("javaw.exe", "java.exe");
+                            launchOption = new MLaunchOption
+                            {
+                                Session = _session,
+                                MaximumRamMb = number,
+                                MinimumRamMb = 512,
+                                ScreenWidth = wite,
+                                ScreenHeight = high,
+                                GameLauncherName = "mindy",
+                                GameLauncherVersion = "1.0",
+                                IsDemo = checkBox1.Checked,
+                                FullScreen = checkBox2.Checked,
+                                JavaPath = updatedPath,
 
 
-                        };
+
+                            };
+                        }
+                        else
+                        {
+                            launchOption = new MLaunchOption
+                            {
+                                Session = _session,
+                                MaximumRamMb = number,
+                                MinimumRamMb = 512,
+                                ScreenWidth = wite,
+                                ScreenHeight = high,
+                                GameLauncherName = "mindy",
+                                GameLauncherVersion = "1.0",
+                                IsDemo = checkBox1.Checked,
+                                FullScreen = checkBox2.Checked,
+                                JavaPath = textBox5.Text,
+
+
+                            };
+                        }
+
+
+
+                        // 선택된 버전 설치 및 실행 프로세스 빌드
+                        var process = await launcher.InstallAndBuildProcessAsync(comboBox1.Text, launchOption, fileProgress, byteProgress);
+
+
+
+
+                        // 마인크래프트 실행
+                        process.Start();
+
+                        this.Hide();
+
+
+                        SaveConfig(); //설정 저장
+                        process.WaitForExit(); //꺼질때가지 기다리기
+                        Process.Start(Application.ExecutablePath); //다시시작
+                        Application.Exit();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        launchOption = new MLaunchOption
-                        {
-                            Session = _session,
-                            MaximumRamMb = number,
-                            MinimumRamMb = 512,
-                            ScreenWidth = wite,
-                            ScreenHeight = high,
-                            GameLauncherName = "mindy",
-                            GameLauncherVersion = "1.0",
-                            IsDemo = checkBox1.Checked,
-                            FullScreen = checkBox2.Checked,
-                            JavaPath = textBox5.Text,
+                        MessageBox.Show(this, $"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                        // UI 다시 활성화
+                        uion();
 
-                        };
                     }
-
-
-
-                    // 선택된 버전 설치 및 실행 프로세스 빌드
-                    var process = await launcher.InstallAndBuildProcessAsync(comboBox1.Text, launchOption, fileProgress, byteProgress);
-
-
-
-
-                    // 마인크래프트 실행
-                    process.Start();
-
-                    this.Hide();
-
-
-                    SaveConfig(); //설정 저장
-                    process.WaitForExit(); //꺼질때가지 기다리기
-                    Process.Start(Application.ExecutablePath); //다시시작
-                    Application.Exit();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(this, $"오류가 발생했습니다: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    // UI 다시 활성화
-                    uion();
-
-                }
                 }
                 else
                 {
                     MessageBox.Show(this, $"오류 발생: 계정에 로그인하지 않음", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+
 
             }
             else
@@ -566,7 +574,7 @@ else
 
         }
 
-      
+
 
 
         //프로세스 변수
@@ -657,18 +665,26 @@ else
                 fileProgress = e;
         }
 
-        private void eventTimer_Tick(object sender, EventArgs e) //특정시간마다 프로세스바 수정
-        {
-            var bytePercentage = (int)(byteProgress.ProgressedBytes / (double)byteProgress.TotalBytes * 100);
-            if (bytePercentage >= 0 && bytePercentage <= 100)
-            {
-                progressBar1.Value = bytePercentage;
-                progressBar1.Maximum = 100;
-            }
+        private void eventTimer_Tick(object sender, EventArgs e)
+{
+    // 1. null 체크 및 안전한 계산 (DivideByZero 방지)
+    // ByteProgress는 struct이므로 null이 될 수 없음. 대신 TotalBytes만 체크
+    if (byteProgress.TotalBytes <= 0) return;
 
-            if (fileProgress != null)
-                label9.Text = $"[{fileProgress.ProgressedTasks}/{fileProgress.TotalTasks}] {fileProgress.Name}";
-        }
+    // 2. 진행률 계산 (백분율 범위 강제 0~100)
+    double ratio = (double)byteProgress.ProgressedBytes / byteProgress.TotalBytes;
+    int percentage = (int)(Math.Max(0, Math.Min(1, ratio)) * 100);
+
+    // 3. UI 스레드 안전성 고려 및 불필요한 설정 방지
+    if (progressBar1.Maximum != 100) progressBar1.Maximum = 100;
+    if (progressBar1.Value != percentage) progressBar1.Value = percentage;
+
+    // 4. 파일 진행 상황 텍스트 업데이트
+    if (fileProgress != null)
+    {
+        label9.Text = $"[{fileProgress.ProgressedTasks}/{fileProgress.TotalTasks}] {fileProgress.Name}";
+    }
+}
 
         private void button2_Click(object sender, EventArgs e) //설치경로 설정
         {
@@ -710,8 +726,8 @@ else
                 textBox6.Text = _session.Username;
                 textBox7.Text = _session.UUID;
                 textBox8.Text = _session.Xuid;
-                 checkBox1.Checked = false;
-                        checkBox1.Enabled = true;
+                checkBox1.Checked = false;
+                checkBox1.Enabled = true;
 
 
             }
@@ -721,23 +737,23 @@ else
                 try
                 {
                     MessageBox.Show(this, $"오류 발생:다시 로그인 해 주세요", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                var loginHandler = JELoginHandlerBuilder.BuildDefault();
-                var session = await loginHandler.AuthenticateInteractively();
-                _session = session;
-                string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string DataFolder = Path.Combine(appDataPath, "마크런처", "skin.png");
-                string DataFolder1 = Path.Combine(appDataPath, "마크런처", "cape.png");
+                    var loginHandler = JELoginHandlerBuilder.BuildDefault();
+                    var session = await loginHandler.AuthenticateInteractively();
+                    _session = session;
+                    string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                    string DataFolder = Path.Combine(appDataPath, "마크런처", "skin.png");
+                    string DataFolder1 = Path.Combine(appDataPath, "마크런처", "cape.png");
 
-                getskin1(DataFolder, DataFolder1);
+                    getskin1(DataFolder, DataFolder1);
 
 
-                textBox6.Text = _session.Username;
-                textBox7.Text = _session.UUID;
-                textBox8.Text = _session.Xuid;
-                } 
+                    textBox6.Text = _session.Username;
+                    textBox7.Text = _session.UUID;
+                    textBox8.Text = _session.Xuid;
+                }
                 catch (Exception ex)
                 {
-                       
+
                     textBox6.Text = null;
                     textBox7.Text = null;
                     textBox8.Text = null;
@@ -747,25 +763,25 @@ else
 
                     pictureBox1.Image = null;
 
-                     if (ex.Message.Contains("NOT_FOUND"))
-    {
-        checkBox1.Checked = true;
+                    if (ex.Message.Contains("NOT_FOUND"))
+                    {
+                        checkBox1.Checked = true;
                         checkBox1.Enabled = false;
-       
-    }
-    else
-    {
-        // 다른 오류는 메시지만 출력
-        MessageBox.Show(this, $"오류 발생:{ex}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
+
+                    }
+                    else
+                    {
+                        // 다른 오류는 메시지만 출력
+                        MessageBox.Show(this, $"오류 발생:{ex}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
 
                 }
                 LoadConfig();
-                }
-               
             }
 
-        
+        }
+
+
 
 
 
@@ -788,36 +804,36 @@ else
                 textBox8.Text = _session.Xuid;
 
                 checkBox1.Checked = false;
-                        checkBox1.Enabled = true;
+                checkBox1.Enabled = true;
 
             }
             catch (Exception ex)
             {
-                
-                    textBox6.Text = null;
-                    textBox7.Text = null;
-                    textBox8.Text = null;
-                    _session.Username = " ";
-                    _session.UUID = " ";
-                    _session.Xuid = " ";
-                    pictureBox1.Image = null;
 
-                     if (ex.Message.Contains("NOT_FOUND"))
-    {
-        checkBox1.Checked = true;
-                        checkBox1.Enabled = false;
-       
-    }
-    else
-    {
-        // 다른 오류는 메시지만 출력
-        MessageBox.Show(this, $"오류 발생:{ex}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
+                textBox6.Text = null;
+                textBox7.Text = null;
+                textBox8.Text = null;
+                _session.Username = " ";
+                _session.UUID = " ";
+                _session.Xuid = " ";
+                pictureBox1.Image = null;
+
+                if (ex.Message.Contains("NOT_FOUND"))
+                {
+                    checkBox1.Checked = true;
+                    checkBox1.Enabled = false;
 
                 }
-                LoadConfig();
+                else
+                {
+                    // 다른 오류는 메시지만 출력
+                    MessageBox.Show(this, $"오류 발생:{ex}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
-        
+            LoadConfig();
+        }
+
 
         private async void button6_Click(object sender, EventArgs e) //로그아웃 버튼
         {
@@ -857,7 +873,7 @@ else
                 if (System.IO.File.Exists(ConfigFilePath))
                 {
                     var lines = System.IO.File.ReadAllLines(ConfigFilePath);
-                    if (lines.Length >= 6)
+                    if (lines.Length >= 9)
                     {
                         comboBox1.Text = lines[0];
                         installPath = lines[1];
@@ -1524,6 +1540,12 @@ else
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+ LICENSE_LoadInstance = new LICENSE_Load();
+            LICENSE_LoadInstance.Show();
         }
     }
 }

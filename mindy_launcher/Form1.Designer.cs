@@ -81,6 +81,7 @@
             comboBox2 = new ComboBox();
             button15 = new Button();
             label15 = new Label();
+            LICENSEbtn = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox2.SuspendLayout();
@@ -596,11 +597,22 @@
             label15.TabIndex = 42;
             label15.Text = "옵션 불러오기";
             // 
+            // LICENSEbtn
+            // 
+            LICENSEbtn.Location = new Point(432, 31);
+            LICENSEbtn.Name = "LICENSEbtn";
+            LICENSEbtn.Size = new Size(75, 23);
+            LICENSEbtn.TabIndex = 43;
+            LICENSEbtn.Text = "LICENSE";
+            LICENSEbtn.UseVisualStyleBackColor = true;
+            LICENSEbtn.Click += button16_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1015, 377);
+            Controls.Add(LICENSEbtn);
             Controls.Add(label15);
             Controls.Add(button15);
             Controls.Add(comboBox2);
@@ -682,5 +694,6 @@
         private ComboBox comboBox2;
         private Button button15;
         private Label label15;
+        private Button LICENSEbtn;
     }
 }
