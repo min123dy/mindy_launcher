@@ -1058,7 +1058,7 @@ namespace 마크런처
                 // 기존 파일이 있을 경우 덮어쓰기
 
                 string fileContent = File.ReadAllText(updateFilePathExe1);
-                int threshold = 24;
+                int threshold = 25;
 
                 // 숫자가 기준보다 크면 명령 실행
                 if (int.Parse(fileContent) > threshold)
